@@ -1,4 +1,4 @@
-# 📈 Cybersecurity: Splunk SIEM SSH Authentication Log Analysis & Threat Detection
+# Cybersecurity: Splunk SIEM SSH Authentication Log Analysis & Threat Detection
 
 ## 📖 Table of Contents
 - [Introduction to SSH Telemetry Auditing](#-introduction-to-ssh-telemetry-auditing)
@@ -17,18 +17,18 @@
 
 ---
 
-## 🛑 Introduction to SSH Telemetry Auditing
+## Introduction to SSH Telemetry Auditing
 The **Secure Shell (SSH)** protocol is the standard mechanism for secure remote administrative access to Linux servers, cloud infrastructure, and network appliances. Because port 22 is frequently exposed to external or untrusted networks, SSH services represent a high-priority target for automated dictionary attacks, password spraying, and distributed credential stuffing.
 
 In a Security Operations Center (SOC), centralizing and analyzing SSH authentication logs via a Security Information and Event Management (SIEM) solution like **Splunk Enterprise** provides critical visibility into ingress vectors. By ingesting, parsing, and visualizing authentication events in real time, security analysts can differentiate routine operational traffic from sustained brute-force campaigns, identify heavily targeted usernames, and geolocate threat actor infrastructure.
 
-## 📌 Project Overview
+## Project Overview
 This project demonstrates end-to-end log ingestion, field extraction, Search Processing Language (SPL) construction, and executive dashboard engineering inside a locally hosted Splunk Enterprise instance. It details the analysis of JSON-formatted SSH authentication telemetry, isolating successful logins from brute-force attempts, evaluating high-risk account targeting, identifying high-frequency attacking IP addresses, and visualizing origin networks using geometric choropleth mapping.
 
-## 🎯 Objective
+## Objective
 To transform raw, complex SSH event streams into actionable security intelligence. By structuring SPL searches and building a dark-theme executive dashboard, this lab provides Blue Team defenders and SOC analysts with rapid single-pane-of-glass triage capabilities to detect, quantify, and mitigate brute-force authentication attacks.
 
-## 🛠️ System Specifications & Ingestion Schema
+## System Specifications & Ingestion Schema
 *   **Platform:** Splunk Enterprise v10.4.2 (64-bit)
 *   **Environment:** Windows Server / Host System
 *   **Web Interface:** `localhost:8000`
@@ -45,7 +45,7 @@ To transform raw, complex SSH event streams into actionable security intelligenc
 
 ---
 
-## 🚀 Deployment Methodology & Analysis Workflow
+## Deployment Methodology & Analysis Workflow
 
 ### Phase 1: Dashboard Initialization & Input Controls
 
@@ -296,12 +296,12 @@ source="ssh_logs_new.json" host="Datta-Guru" sourcetype="_json" event_type="*Fai
 
 ---
 
-## 📑 Executive Summary & Exported Artifacts
+## Executive Summary & Exported Artifacts
 
 The final dashboard aggregates authentication health metrics, targeted account frequencies, suspicious source IP rankings, and global origin heatmaps into a unified interface[cite: 1].
 
 To archive and distribute these investigative findings to security leadership, an executive report was generated directly from the Splunk platform[cite: 1]:
-*   📄 **View the full exported report here:** [Dhananjay_Splunk_SSH2_Report.pdf](./Dhananjay_Splunk_SSH2_Report.pdf) *(Ensure this PDF file is uploaded directly to the repository root for correct resolution).*
+*   **View the full exported report here:** [Dhananjay_Splunk_SSH2_Report.pdf](./docs/Dhananjay_Splunk_SSH2_Report.pdf) *(Ensure this PDF file is uploaded directly to the repository root for correct resolution).*
 
 ### Summary of Documented Metrics
 *   **Total SSH Events Ingested:** 2,400[cite: 1]
@@ -313,7 +313,7 @@ To archive and distribute these investigative findings to security leadership, a
 
 ---
 
-## 🛡️ Security Relevance & SOC Impact
+## Security Relevance & SOC Impact
 Proactive SSH monitoring is a critical operational capability for Security Operations Centers:
 *   **Early-Stage Reconnaissance & Spray Detection:** Identifying high volumes of failed logins against generic usernames (`admin`, `test`, `webmaster`) signals automated dictionary attacks before an adversary obtains a valid credential set[cite: 1].
 *   **Lateral Movement & Bastion Defense:** Monitoring successful logins (`612` events) alongside failed attempts allows analysts to correlate anomalous spikes in successful authentications occurring outside normal working hours or originating from unusual geographic locations[cite: 1].
@@ -321,5 +321,5 @@ Proactive SSH monitoring is a critical operational capability for Security Opera
 
 ---
 
-## ⚖️ Ethical Guidelines & Disclaimer
+## Ethical Guidelines & Disclaimer
 This log analysis and SIEM dashboarding project was performed within an authorized, isolated laboratory environment for technical education, defensive engineering, and security analysis purposes. The telemetry analyzed consists of simulated authentication event logs structured to model modern SSH brute-force attack patterns.
