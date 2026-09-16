@@ -260,24 +260,24 @@ Rendered the data as a styled **Column Chart** under the title `Failed Logins By
 
 ### Phase 5: Source Network Triage & Geographic IP Mapping
 
-To identify the origin of the brute-force activity and determine whether attacks were distributed or concentrated, advanced statistical tables and geographic mapping queries were integrated into the dashboard[cite: 1].
+To identify the origin of the brute-force activity and determine whether attacks were distributed or concentrated, advanced statistical tables and geographic mapping queries were integrated into the dashboard.
 
 **Query 6: High-Frequency Attacking IPs (Brute Force Identification)**
 ```spl
 source="ssh_logs_new.json" host="Datta-Guru" sourcetype="_json" event_type="*Failed*" | top limit=10 id.orig_h
 ```
-*   **Command Breakdown:** Extracts all failed connection iterations (`event_type="*Failed*"`) and aggregates them by client source IP (`id.orig_h`), calculating relative percentages to isolate the most aggressive attacking nodes[cite: 1].
-*   **Triaged Threat Sources:** The statistical analysis identified key external IP addresses driving the failed authentication volume[cite: 1]:
-    *   `83.195.24.226`: 26 attempts (4.29%)[cite: 1]
-    *   `25.47.52.197`: 26 attempts (4.29%)[cite: 1]
-    *   `191.47.156.160`: 22 attempts (3.63%)[cite: 1]
-    *   `52.173.49.103`: 20 attempts (3.30%)[cite: 1]
-    *   `170.86.212.161`: 20 attempts (3.30%)[cite: 1]
-    *   `168.154.125.86`: 20 attempts (3.30%)[cite: 1]
-    *   `110.177.195.150`: 20 attempts (3.30%)[cite: 1]
-    *   `74.165.131.224`: 18 attempts (2.97%)[cite: 1]
-    *   `110.16.7.177`: 18 attempts (2.97%)[cite: 1]
-    *   `34.243.90.209`: 16 attempts (2.64%)[cite: 1]
+*   **Command Breakdown:** Extracts all failed connection iterations (`event_type="*Failed*"`) and aggregates them by client source IP (`id.orig_h`), calculating relative percentages to isolate the most aggressive attacking nodes.
+*   **Triaged Threat Sources:** The statistical analysis identified key external IP addresses driving the failed authentication volume:
+    *   `83.195.24.226`: 26 attempts (4.29%)
+    *   `25.47.52.197`: 26 attempts (4.29%)
+    *   `191.47.156.160`: 22 attempts (3.63%)
+    *   `52.173.49.103`: 20 attempts (3.30%)
+    *   `170.86.212.161`: 20 attempts (3.30%)
+    *   `168.154.125.86`: 20 attempts (3.30%)
+    *   `110.177.195.150`: 20 attempts (3.30%)
+    *   `74.165.131.224`: 18 attempts (2.97%)
+    *   `110.16.7.177`: 18 attempts (2.97%)
+    *   `34.243.90.209`: 16 attempts (2.64%)
 
 **Query 7: Geographic Origin Mapping (Choropleth Projection)**
 ```spl
@@ -291,33 +291,33 @@ source="ssh_logs_new.json" host="Datta-Guru" sourcetype="_json" event_type="*Fai
     *   `table id.orig_h`: Isolates client source IP addresses.
     *   `iplocation id.orig_h`: Queries Splunk's internal MaxMind-based IP lookup database to resolve public IP addresses into country, region, and coordinate metadata.
     *   `stats count by Country`: Aggregates the failed connection attempts by the resolved country name.
-    *   `geom geo_countries featureIdField="Country"`: Binds the aggregated statistical counts to standardized geometric polygons for global map rendering[cite: 1].
-*   **Visual Output:** Rendered within a **Choropleth Map** panel titled `Brute Force Attack With Geo-Location`, grouping origin densities into colored operational tiers (0–40, 40–80, 80–120, 120–160, 160–200) to highlight threat concentration[cite: 1].
+    *   `geom geo_countries featureIdField="Country"`: Binds the aggregated statistical counts to standardized geometric polygons for global map rendering.
+*   **Visual Output:** Rendered within a **Choropleth Map** panel titled `Brute Force Attack With Geo-Location`, grouping origin densities into colored operational tiers (0–40, 40–80, 80–120, 120–160, 160–200) to highlight threat concentration.
 
 ---
 
 ## Executive Summary & Exported Artifacts
 
-The final dashboard aggregates authentication health metrics, targeted account frequencies, suspicious source IP rankings, and global origin heatmaps into a unified interface[cite: 1].
+The final dashboard aggregates authentication health metrics, targeted account frequencies, suspicious source IP rankings, and global origin heatmaps into a unified interface.
 
-To archive and distribute these investigative findings to security leadership, an executive report was generated directly from the Splunk platform[cite: 1]:
+To archive and distribute these investigative findings to security leadership, an executive report was generated directly from the Splunk platform:
 *   **View the full exported report here:** [Dhananjay_Splunk_SSH2_Report.pdf](./docs/Dhananjay_Splunk_SSH2_Report.pdf) *(Ensure this PDF file is uploaded directly to the repository root for correct resolution).*
 
 ### Summary of Documented Metrics
-*   **Total SSH Events Ingested:** 2,400[cite: 1]
-*   **Confirmed Successful Logins:** 612[cite: 1]
-*   **Single Failed Logins:** 610[cite: 1]
-*   **Invalid / Monitored User Attempts:** 2,400[cite: 1]
-*   **Primary Targeted Account:** `root` (54 failed attempts)[cite: 1]
-*   **Top Attacking Infrastructure:** `83.195.24.226` and `25.47.52.197` (26 attempts each)[cite: 1]
+*   **Total SSH Events Ingested:** 2,400
+*   **Confirmed Successful Logins:** 612
+*   **Single Failed Logins:** 610
+*   **Invalid / Monitored User Attempts:** 2,400
+*   **Primary Targeted Account:** `root` (54 failed attempts)
+*   **Top Attacking Infrastructure:** `83.195.24.226` and `25.47.52.197` (26 attempts each)
 
 ---
 
 ## Security Relevance & SOC Impact
 Proactive SSH monitoring is a critical operational capability for Security Operations Centers:
-*   **Early-Stage Reconnaissance & Spray Detection:** Identifying high volumes of failed logins against generic usernames (`admin`, `test`, `webmaster`) signals automated dictionary attacks before an adversary obtains a valid credential set[cite: 1].
-*   **Lateral Movement & Bastion Defense:** Monitoring successful logins (`612` events) alongside failed attempts allows analysts to correlate anomalous spikes in successful authentications occurring outside normal working hours or originating from unusual geographic locations[cite: 1].
-*   **Targeted Defensive Controls (Fail2ban / IP Shunning):** The statistical IP breakdown (`id.orig_h`) provides immediate, high-fidelity indicators of compromise (IoCs) that can be ingested into firewalls or automated SOAR playbooks to ban malicious subnets dynamically[cite: 1].
+*   **Early-Stage Reconnaissance & Spray Detection:** Identifying high volumes of failed logins against generic usernames (`admin`, `test`, `webmaster`) signals automated dictionary attacks before an adversary obtains a valid credential set.
+*   **Lateral Movement & Bastion Defense:** Monitoring successful logins (`612` events) alongside failed attempts allows analysts to correlate anomalous spikes in successful authentications occurring outside normal working hours or originating from unusual geographic locations.
+*   **Targeted Defensive Controls (Fail2ban / IP Shunning):** The statistical IP breakdown (`id.orig_h`) provides immediate, high-fidelity indicators of compromise (IoCs) that can be ingested into firewalls or automated SOAR playbooks to ban malicious subnets dynamically.
 
 ---
 
