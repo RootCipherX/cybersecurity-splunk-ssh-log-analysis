@@ -1,6 +1,6 @@
 # Cybersecurity: Splunk SIEM SSH Authentication Log Analysis & Threat Detection
 
-## 📖 Table of Contents
+## Table of Contents
 - [Introduction to SSH Telemetry Auditing](#-introduction-to-ssh-telemetry-auditing)
 - [Project Overview](#-project-overview)
 - [Objective](#-objective)
